@@ -1,5 +1,5 @@
 import SwiftUI
-
+import UIKit
 public struct MetalImageCollectionView: UIViewRepresentable {
     public var images: [UIImage]
 
@@ -32,7 +32,7 @@ public struct MetalImageCollectionView: UIViewRepresentable {
         public func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
             for indexPath in indexPaths {
                 let image = parent.images[indexPath.row]
-                ImageLoader.shared.loadTexture(for: image, device: MTLCreateSystemDefaultDevice(), completion: { _ in })
+                ImageLoader.shared.loadTexture(for: image, device: MTLCreateSystemDefaultDevice() as! MTLDevice, completion: { _ in })
             }
         }
     }

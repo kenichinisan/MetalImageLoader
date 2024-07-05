@@ -1,5 +1,6 @@
 import Metal
 import MetalKit
+import UIKit
 
 public class MetalImageView: MTKView {
     public var renderer: MetalRenderer!
