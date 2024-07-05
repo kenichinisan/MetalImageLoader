@@ -1,6 +1,5 @@
 import Metal
 import MetalKit
-import UIKit
 
 public class MetalRenderer {
     public var device: MTLDevice!
@@ -16,16 +15,23 @@ public class MetalRenderer {
     }
 
     private func setupPipeline() {
-        let library = device.makeDefaultLibrary()
-        let vertexFunction = library?.makeFunction(name: "vertex_main")
-        let fragmentFunction = library?.makeFunction(name: "fragment_main")
+        guard let library = device.makeDefaultLibrary() else {
+            fatalError("Could not create default library.")
+        }
+        
+        let vertexFunction = library.makeFunction(name: "vertex_main")
+        let fragmentFunction = library.makeFunction(name: "fragment_main")
 
         let pipelineDescriptor = MTLRenderPipelineDescriptor()
         pipelineDescriptor.vertexFunction = vertexFunction
         pipelineDescriptor.fragmentFunction = fragmentFunction
         pipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
 
-        pipelineState = try? device.makeRenderPipelineState(descriptor: pipelineDescriptor)
+        do {
+            pipelineState = try device.makeRenderPipelineState(descriptor: pipelineDescriptor)
+        } catch {
+            fatalError("Could not create render pipeline state: \(error)")
+        }
     }
 
     private func setupVertexBuffer() {
