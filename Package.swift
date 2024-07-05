@@ -11,9 +11,11 @@ let package = Package(
             name: "MetalImageLoader",
             targets: ["MetalImageLoader"]),
     ],
+    dependencies: [],
     targets: [
         .target(
-            name: "MetalImageLoader"),
+            name: "MetalImageLoader",
+            dependencies: []),
         .testTarget(
             name: "MetalImageLoaderTests",
             dependencies: ["MetalImageLoader"]),
